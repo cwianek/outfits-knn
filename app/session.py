@@ -23,7 +23,6 @@ def json_response(body='', **kwargs):
     kwargs['content_type'] = 'text/json'
     return web.Response(**kwargs)
 
-
 @session_page.route("/signup", methods=["POST"])
 def signup():
     req = request.get_json()
@@ -61,6 +60,11 @@ def login():
 
     return dumps({'token': jwt_token})
 
+@session_page.route("/test", methods=["GET"])
+def test():
+    return dumps({'test': 'service is working'})
+
+
 class UnrecognizedParametersOrCombination(exceptions.HTTPException):
     code = 460
     description = 'The query parameters or their combination are not recognized!'
@@ -75,10 +79,7 @@ class Middleware:
 
         request = Request(environ)
 
-        if request.path == '/login':
-            return self.app(environ, start_response)
-
-        if request.path == '/signup':
+        if request.path in ['/login', '/singnup', '/test']:
             return self.app(environ, start_response)
 
         request.user = None
