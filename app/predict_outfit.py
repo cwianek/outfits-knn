@@ -24,7 +24,7 @@ def getWornTimes(outfit):
         return db.worns.count_documents({"outfitId": outfit["outfitId"]})
 
 def scale_features(X):
-    X[:, 0] *= 5
+    #X[:, 0] *= 1
     X[:, 1] *= 2
     return X
 
