@@ -1,7 +1,7 @@
 from app.dao import get_db, toRest, getSequenceNextValue
 from bson.json_util import dumps
 from flask import jsonify, request, Blueprint
-from app.predict_outfit import predict
+from app.predict_outfit import predict, plot
 from app.worns import isWorn
 
 db = get_db()
@@ -36,7 +36,7 @@ def fetchOutfits():
     result = []
 
     if len(worns) > n_neighbors:
-        result = predict(weather)
+        result = predict(email, weather)
     else:
         result = list(db.outfits.find({'email': email}))
 
@@ -44,3 +44,13 @@ def fetchOutfits():
         res["worn"] = isWorn(res["id"])
 
     return dumps(result)
+
+@outfits_page.route("/plot-prediction", methods=["POST"])
+def plot_prediction():
+    email = request.environ['email']
+    req = request.get_json()
+    weather = req['weather']
+
+    outfitId, buf = plot(email, weather)
+
+    return dumps({"outfitId": outfitId, "data": buf})
