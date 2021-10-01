@@ -78,8 +78,8 @@ class Middleware:
     def __call__(self, environ, start_response):
 
         request = Request(environ)
-
-        if request.path in ['/login', '/singnup', '/test']:
+        
+        if request.path in ['/login', '/signup', '/test']:
             return self.app(environ, start_response)
 
         request.user = None
