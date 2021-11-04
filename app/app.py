@@ -30,10 +30,4 @@ def handle_460(e):
     response.content_type = "application/json"
     return response
 
-@app.after_request # blueprint can also be app~~
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = 'Content-Type'
-    return response
-
 app.register_error_handler(UnrecognizedParametersOrCombination, handle_460)
