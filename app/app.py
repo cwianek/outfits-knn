@@ -14,7 +14,7 @@ app.register_blueprint(outfits_page)
 app.register_blueprint(products_page)
 app.register_blueprint(worns_page)
 app.register_blueprint(session_page)
-CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.wsgi_app = Middleware(app.wsgi_app)
 
