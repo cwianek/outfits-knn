@@ -33,7 +33,7 @@ def handle_460(e):
 @app.after_request # blueprint can also be app~~
 def after_request(response):
     header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Origin'] = 'Content-Type'
     return response
 
 app.register_error_handler(UnrecognizedParametersOrCombination, handle_460)
