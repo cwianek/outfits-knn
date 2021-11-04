@@ -27,7 +27,7 @@ def removeOutfit():
     db.worns.delete_many({'outfitId': id})
     return toRest(id)
 
-@outfits_page.route("/outfits-by-weather", methods=["POST"])
+@outfits_page.route("/outfits-by-weather", methods=["POST", "OPTIONS"])
 def fetchOutfits():
     email = request.environ['email']
     worns = list(db.worns.find({'email': email}))
